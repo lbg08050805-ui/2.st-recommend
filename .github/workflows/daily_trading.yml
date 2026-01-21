@@ -3,8 +3,11 @@ on:
   push:
   workflow_dispatch:
   schedule:
+    - cron: '30 5 * * 1-5' # 14:30 KST
+    - cron: '40 5 * * 1-5' # 14:40 KST
+    - cron: '50 5 * * 1-5' # 14:50 KST
+    - cron: '00 6 * * 1-5' # 15:00 KST
     - cron: '10 6 * * 1-5' # 15:10 KST
-    - cron: '40 6 * * 1-5' # 15:40 KST
 
 # [중요] 이 부분이 있어야 만든 파일(CSV)을 저장할 수 있습니다.
 permissions:
