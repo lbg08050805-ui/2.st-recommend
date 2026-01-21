@@ -1,10 +1,14 @@
 ﻿name: daily_trading.yml
 on:
-  push:                # 옵션 1: 내가 파일을 올릴(Push) 때마다 실행
-  workflow_dispatch:   # 옵션 2: GitHub 사이트에서 내가 버튼 눌러서 실행
+  push:
+  workflow_dispatch:
   schedule:
     - cron: '10 6 * * 1-5' # 15:10 KST
     - cron: '40 6 * * 1-5' # 15:40 KST
+
+# [중요] 이 부분이 있어야 만든 파일(CSV)을 저장할 수 있습니다.
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -16,10 +20,10 @@ jobs:
           python-version: '3.11'
       - run: pip install -r requirements.txt
       - run: python get_pure_leaders.py
-      - name: Commit Results
+      - name: Commit and Push Results
         run: |
-          git config --global user.name "Auto-Bot"
-          git config --global user.email "bot@github.com"
-          git add *.csv
-          git commit -m "Update Data: $(date +'%Y-%m-%d %H:%M')" || exit 0
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add data/*.csv || echo "No CSV files found"
+          git commit -m "Auto-update data: $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
           git push
