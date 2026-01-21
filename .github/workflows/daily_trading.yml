@@ -1,9 +1,11 @@
 ﻿name: daily_trading.yml
 on:
+  push:                # 옵션 1: 내가 파일을 올릴(Push) 때마다 실행
+  workflow_dispatch:   # 옵션 2: GitHub 사이트에서 내가 버튼 눌러서 실행
   schedule:
     - cron: '10 6 * * 1-5' # 15:10 KST
     - cron: '40 6 * * 1-5' # 15:40 KST
-  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
